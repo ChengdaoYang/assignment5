@@ -47,12 +47,12 @@ def prepare_sample(sample, target_code, word_space_size):
 
 task_dir = os.path.dirname(os.path.realpath(__file__))
 llprint("Loading Data ... ")
-lexicon_dict = load(os.path.join(task_dir, "data\\en-10k\\lexicon-dict.pkl"))
-data = load(os.path.join(task_dir, "data\\en-10k\\train\\train.pkl"))
+lexicon_dict = load(os.path.join(task_dir, "data/en-10k/lexicon-dict.pkl"))
+data = load(os.path.join(task_dir, "data/en-10k/train/train.pkl"))
 llprint("Done!\n")
 
 # the model parameters
-N = 256
+N = 128
 W = 64 
 R = 4     # memory parameters
 X = 159   # input size
@@ -60,7 +60,7 @@ Y = 159   # output size
 NN = 256  # controller's network output size
 zeta_size = R*W + 3*W + 5*R + 3
 # training parameters
-iterations = 10000
+iterations = 100000
 learning_rate = 0.001
 momentum = 0.9
 
@@ -81,7 +81,7 @@ graph = tf.Graph()
 with graph.as_default():
     
     # optimizer
-    optimizer = tf.train.RMSPropOptimizer(learning_rate, momentum=momentum)
+    optimizer = tf.train.AdamOptimizer(learning_rate)
 
     # placeholders
     input_data = tf.placeholder(tf.float32, [None, X])
